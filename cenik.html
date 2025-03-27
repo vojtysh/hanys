@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autopůjčovna - Ceník a akce</title>
+    <style>
+        /* Předchozí styly zůstanou, přidáme nové pro ceník */
+        .pricing-section {
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        .pricing-section h3 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .pricing-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        .pricing-table th, .pricing-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .pricing-table th {
+            background-color: #3498db;
+            color: white;
+        }
+        .special-offer {
+            background-color: #f1c40f;
+            color: black;
+            font-weight: bold;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        .promo-banner {
+            background-color: #27ae60;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        /* Dark theme styly */
+        body.dark-theme .pricing-section {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+        }
+        body.dark-theme .pricing-table th {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+        body.dark-theme .pricing-table td {
+            border-bottom-color: #444;
+        }
+        body.dark-theme .special-offer {
+            background-color: #f39c12;
+            color: white;
+        }
+        body.dark-theme .promo-banner {
+            background-color: #2ecc71;
+        }
+        .btn {
+            display: block;
+            width: 200px;
+            margin: 0 auto;
+            background-color: #0064a7;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background-color: #f1f1f1;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(90deg);
+        }
+
+        .theme-dropdown {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 10px;
+            display: none;
+            z-index: 1000;
+        }
+
+        .theme-dropdown button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /* Tmavý motiv */
+        body.dark-theme {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme header {
+            background-color: #1f1f1f;
+        }
+
+        body.dark-theme .car-card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .car-details .specs {
+            background-color: #2a2a2a;
+        }
+
+        body.dark-theme .header-button {
+            background-color: #4a4a4a;
+        }
+
+        body.dark-theme .header-button:hover {
+            background-color: #5a5a5a;
+        }
+
+        body.dark-theme .btn {
+            background-color: #4a4a4a;
+        }
+
+        body.dark-theme .btn:hover {
+            background-color: #5a5a5a;
+        }
+    </style>
+</head>
+<body>
+
+ <!-- Tlačítko theme switcheru -->
+ <button class="theme-toggle" onclick="toggleThemeDropdown()">🌓</button>
+    
+ <!-- Dropdown pro výběr tématu -->
+ <div class="theme-dropdown" id="themeDropdown">
+     <button onclick="setTheme('light')">Světlý motiv</button>
+     <button onclick="setTheme('dark')">Tmavý motiv</button>
+     <button onclick="setTheme('system')">Systémový motiv</button>
+ </div>
+
+    <!-- Předchozí obsah zůstává -->
+    
+    <div class="pricing-section">
+        <div class="promo-banner">
+            <h3>Letní akce: První den pronájmu se slevou 20%!</h3>
+        </div>
+
+        <h3>Ceník pronájmu vozidel</h3>
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>Vozidlo</th>
+                    <th>Cena/den</th>
+                    <th>Víkendový pronájem</th>
+                    <th>Dlouhodobý pronájem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mercedes Benz CLE Cabrio</td>
+                    <td>3500 Kč</td>
+                    <td>3000 Kč</td>
+                    <td>2800 Kč/den</td>
+                </tr>
+                <tr>
+                    <td>Mercedes Benz GLE 350 de</td>
+                    <td>2500 Kč</td>
+                    <td>2200 Kč</td>
+                    <td>2000 Kč/den</td>
+                </tr>
+                <tr>
+                    <td>Čtyřkolka</td>
+                    <td>1200 Kč</td>
+                    <td>1000 Kč</td>
+                    <td>900 Kč/den</td>
+                </tr>
+                <tr>
+                    <td>BMW C 400 GT Skútr</td>
+                    <td>1800 Kč</td>
+                    <td>1500 Kč</td>
+                    <td>1300 Kč/den</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="special-offer">
+            Sleva 10% pro první zákazníky a při pronájmu na 7 a více dní!
+        </div>
+    </div>
+
+    <button class="btn" onclick="window.location.href='index.html'">Zpět na vozidla</button>
+
+    <script>
+        // Funkce pro přepínání dropdownu
+        function toggleThemeDropdown() {
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        // Funkce pro nastavení tématu
+        function setTheme(theme) {
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (theme === 'light') {
+                document.body.classList.remove('dark-theme');
+                themeToggle.innerHTML = '🌞'; // Bílé slunce pro světlý motiv
+                localStorage.setItem('theme', 'light');
+            } else if (theme === 'dark') {
+                document.body.classList.add('dark-theme');
+                themeToggle.innerHTML = '🌑'; // Černý měsíc pro tmavý motiv
+                localStorage.setItem('theme', 'dark');
+            } else if (theme === 'system') {
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    document.body.classList.add('dark-theme');
+                    themeToggle.innerHTML = '🌑';
+                } else {
+                    document.body.classList.remove('dark-theme');
+                    themeToggle.innerHTML = '🌞';
+                }
+                localStorage.setItem('theme', 'system');
+            }
+            
+            // Zavření dropdownu po výběru
+            document.getElementById('themeDropdown').style.display = 'none';
+        }
+
+        // Inicializace tématu při načtení stránky
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                // Výchozí nastavení podle systému
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    themeToggle.innerHTML = '🌑';
+                } else {
+                    themeToggle.innerHTML = '🌞';
+                }
+                setTheme('system');
+            }
+
+            // Poslech změn systémového tématu
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
+                if (localStorage.getItem('theme') === 'system') {
+                    setTheme('system');
+                }
+            });
+        });
+
+        // Zavření dropdownu při kliknutí mimo něj
+        window.onclick = function(event) {
+            if (!event.target.matches('.theme-toggle')) {
+                const dropdown = document.getElementById('themeDropdown');
+                if (dropdown.style.display === 'block') {
+                    dropdown.style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
