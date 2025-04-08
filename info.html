@@ -6,66 +6,251 @@
     <title>Autopůjčovna - Informace</title>
     <link rel="icon" href="LOGO.jpg" type="image/jpeg">
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            line-height: 1.6;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f4f4f4;
-            transition: background-color 0.3s, color 0.3s;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        body {
+            line-height: 1.6;
+            width: 100%;
+            min-height: 100vh;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
         header {
-            background-color: #2c3e50;
+            background: linear-gradient(135deg, #2c3e50, #1e3c72);
             color: white;
             text-align: center;
-            padding: 1.5rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            padding: 2.5rem 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
         }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #1abc9c, #3498db);
+            background-size: 200% 100%;
+            animation: gradientShift 5s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            animation: fadeIn 1s ease;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
         .back-btn {
-            display: block;
-            width: 200px;
-            margin: 20px auto;
-            background-color: #3498db;
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
             padding: 12px 25px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
             text-align: center;
-            transition: background-color 0.3s ease;
+            max-width: 400px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
+            margin: 20px auto;
+            display: block;
+            width: 200px;
         }
+
         .back-btn:hover {
-            background-color: #2980b9;
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.5);
         }
+
+        .back-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+
+        .back-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+
+        .back-btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+
         .owner-card {
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             overflow: hidden;
+            transition: all 0.4s ease;
+            transform: translateY(0);
+            position: relative;
+            margin: 30px auto;
+            max-width: 900px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
         }
+
+        .owner-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .owner-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
         .owner-main-image {
             width: 100%;
-            height: 500px;
+            height: 400px;
             object-fit: cover;
+            transition: all 0.5s ease;
         }
+
+        .owner-card:hover .owner-main-image {
+            transform: scale(1.05);
+        }
+
         .owner-details {
-            padding: 20px;
+            padding: 25px;
         }
+
         .owner-details h2 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+            color: #0b3f74;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
             text-align: center;
         }
+
+        .owner-details h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: #3498db;
+        }
+
         .owner-details .description {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             color: #666;
+            font-style: italic;
+            font-size: 1.1rem;
         }
+
+        .owner-details h3 {
+            color: #0b3f74;
+            margin: 20px 0 15px;
+            font-size: 1.4rem;
+        }
+
         .owner-details .specs {
             background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .owner-details .specs:hover {
+            background-color: #f0f4f8;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .owner-details .specs p {
+            margin-bottom: 10px;
+        }
+
+        .contact-info p {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+        }
+
+        .contact-info p::before {
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .contact-info p:nth-child(1)::before {
+            content: '📞';
+        }
+
+        .contact-info p:nth-child(2)::before {
+            content: '✉️';
+        }
+
+        .contact-info p:nth-child(3)::before {
+            content: '🏢';
+        }
+
+        .contact-info p:nth-child(4)::before {
+            content: '📅';
         }
 
         /* Styly pro theme switcher */
@@ -74,39 +259,54 @@
             top: 20px;
             right: 20px;
             z-index: 1000;
-            background-color: #f1f1f1;
+            width: 50px;
+            height: 50px;
+            background-color: #ffffff;
             border: none;
-            padding: 10px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
         }
 
         .theme-toggle:hover {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .theme-dropdown {
             position: fixed;
-            top: 70px;
+            top: 80px;
             right: 20px;
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+            padding: 15px;
             display: none;
             z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
 
         .theme-dropdown button {
             display: block;
             width: 100%;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 12px 15px;
+            margin: 8px 0;
             border: none;
-            background-color: #f1f1f1;
-            border-radius: 5px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+
+        .theme-dropdown button:hover {
+            background-color: #e6eaf0;
+            transform: translateX(5px);
         }
 
         /* Tmavý motiv */
@@ -116,34 +316,77 @@
         }
 
         body.dark-theme header {
-            background-color: #1f1f1f;
+            background: linear-gradient(135deg, #1a1a1a, #2c3e50);
         }
 
         body.dark-theme .owner-card {
             background-color: #1e1e1e;
             color: #e0e0e0;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        body.dark-theme .owner-details h2,
+        body.dark-theme .owner-details h3 {
+            color: #3498db;
+        }
+
+        body.dark-theme .owner-details .description {
+            color: #aaa;
         }
 
         body.dark-theme .owner-details .specs {
             background-color: #2a2a2a;
-            color: #e0e0e0;
         }
 
-        body.dark-theme .owner-details h2 {
-            color: #e0e0e0;
-        }
-
-        body.dark-theme .owner-details .description {
-            color: #a0a0a0;
+        body.dark-theme .owner-details .specs:hover {
+            background-color: #333;
         }
 
         body.dark-theme .back-btn {
-            background-color: #4a4a4a;
-            color: #e0e0e0;
+            background: linear-gradient(135deg, #2c3e50, #34495e);
         }
 
         body.dark-theme .back-btn:hover {
-            background-color: #5a5a5a;
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+        }
+
+        body.dark-theme .theme-toggle {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.3);
+        }
+
+        body.dark-theme .theme-dropdown {
+            background-color: #2a2a2a;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+        }
+
+        body.dark-theme .theme-dropdown button {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        body.dark-theme .theme-dropdown button:hover {
+            background-color: #333;
+        }
+
+        /* Responsivní design pro mobilní zařízení */
+        @media (max-width: 768px) {
+            .owner-main-image {
+                height: 300px;
+            }
+            
+            .owner-details {
+                padding: 15px;
+            }
+            
+            .owner-details h2 {
+                font-size: 1.5rem;
+            }
+            
+            .owner-details h3 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
@@ -158,34 +401,62 @@
         <button onclick="setTheme('system')">Systémový motiv</button>
     </div>
   
-    <div class="owner-card">
-        <img src="LOGO.jpg" alt="Logo autopůjčovny" class="owner-main-image">
-        <div class="owner-details">
-            <h2>Jiří Hána - Zakladatel autopůjčovny</h2>
-            <p class="description">Profesionál s vášní pro automobily</p>
-            <div class="specs">
-                <p>Jmenuji se Jiří Hána a jsem zakladatelem této autopůjčovny. Mým cílem je poskytovat profesionální a spolehlivé služby pronájmu vozidel již přes 10 let.</p>
+    <header>
+        <h1>Autopůjčovna Chodur S.R.O</h1>
+        <p>Profesionální služby a osobní přístup</p>
+    </header>
+
+    <div class="container">
+        <div class="owner-card">
+            <img src="LOGO.jpg" alt="Logo autopůjčovny" class="owner-main-image">
+            <div class="owner-details">
+                <h2>Jiří Hána - Zakladatel autopůjčovny</h2>
+                <p class="description">Profesionál s vášní pro automobily</p>
+                <div class="specs">
+                    <p>Jmenuji se Jiří Hána a jsem zakladatelem této autopůjčovny. Mým cílem je poskytovat profesionální a spolehlivé služby pronájmu vozidel již přes 10 let.</p>
+                    
+                    <p>S láskou vybírám každé vozidlo do naší flotily a kladu důraz na maximální spokojenost našich klientů. Mým mottem je: "Nejde jen o pronájem auta, ale o zážitek z jízdy."</p>
+                    
+                    <h3>Kontaktní informace</h3>
+                    <div class="contact-info">
+                        <p>Telefon: +420 602 573 473</p>
+                        <p>Email: jiri.hana@seznam.cz</p>
+                        <p>Adresa: Měšická 536, Bašt 250 85</p>
+                        <p>Provozní doba: 
+                            <br>Po-Pá: 8:00 - 18:00
+                            <br>So-Ne: 9:00 - 15:00</p>
+                    </div>
+                </div>
                 
-                <p>S láskou vybírám každé vozidlo do naší flotily a kladu důraz na maximální spokojenost našich klientů. Mým mottem je: "Nejde jen o pronájem auta, ale o zážitek z jízdy."</p>
-                
-                <h3>Kontaktní informace</h3>
-                <p>📞 Telefon: +420 602 573 473</p>
-                <p>✉️ Email: jiri.hana@seznam.cz</p>
-                <p>🏢 Adresa: Měšická 536, Bašt 250 85</p>
-                <p>📅 Provozní doba: 
-                    <br>Po-Pá: 8:00 - 18:00
-                    <br>So-Ne: 9:00 - 15:00</p>
+                <a href="index.html" class="back-btn">Zpět na vozidla</a>
             </div>
-            
-            <a href="index.html" class="back-btn">Zpět na vozidla</a>
         </div>
     </div>
 
     <script>
-        // Funkce pro přepínání dropdownu
+        // Funkce pro zobrazení/skrytí dropdownu témat
         function toggleThemeDropdown() {
             const dropdown = document.getElementById('themeDropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            if (dropdown.style.display === 'block') {
+                dropdown.style.opacity = '0';
+                dropdown.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdown.style.display = 'none';
+                }, 300);
+            } else {
+                dropdown.style.display = 'block';
+                setTimeout(() => {
+                    dropdown.style.opacity = '1';
+                    dropdown.style.transform = 'translateY(0)';
+                }, 10);
+            }
+            
+            // Animace ikony
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'rotate(0)';
+            }, 300);
         }
 
         // Funkce pro nastavení tématu
@@ -212,11 +483,17 @@
             }
             
             // Zavření dropdownu po výběru
-            document.getElementById('themeDropdown').style.display = 'none';
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.style.opacity = '0';
+            dropdown.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 300);
         }
 
-        // Inicializace tématu při načtení stránky
+        // Přidání efektu ripple pro tlačítko
         document.addEventListener('DOMContentLoaded', () => {
+            // Načtení tématu
             const savedTheme = localStorage.getItem('theme');
             const themeToggle = document.querySelector('.theme-toggle');
             
@@ -231,9 +508,39 @@
                 }
                 setTheme('system');
             }
+            
+            // Animace karty po načtení
+            setTimeout(() => {
+                document.querySelector('.owner-card').classList.add('active');
+            }, 300);
+            
+            // Přidání efektu ripple pro zpětné tlačítko
+            const backBtn = document.querySelector('.back-btn');
+            backBtn.addEventListener('click', function(e) {
+                const rect = backBtn.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.width = '1px';
+                ripple.style.height = '1px';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.animation = 'ripple 0.6s linear';
+                
+                backBtn.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 700);
+            });
 
             // Poslech změn systémového tématu
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
+            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
                 if (localStorage.getItem('theme') === 'system') {
                     setTheme('system');
                 }
@@ -245,10 +552,14 @@
             if (!event.target.matches('.theme-toggle')) {
                 const dropdown = document.getElementById('themeDropdown');
                 if (dropdown.style.display === 'block') {
-                    dropdown.style.display = 'none';
+                    dropdown.style.opacity = '0';
+                    dropdown.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 300);
                 }
             }
-        }
+        };
     </script>
 </body>
 </html>
