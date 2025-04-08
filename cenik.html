@@ -5,119 +5,322 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Autopůjčovna - Ceník a akce</title>
     <style>
-        /* Předchozí styly zůstanou, přidáme nové pro ceník */
-        .pricing-section {
-            background-color: #f9f9f9;
-            padding: 30px;
-            border-radius: 10px;
-            margin-top: 30px;
+        /* Základní styly */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+        
+        /* Vylepšené styly pro ceník */
+        .pricing-section {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 15px;
+            margin: 50px auto;
+            max-width: 1200px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transform: translateY(0);
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+        }
+        
+        .pricing-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #3498db, #1abc9c, #3498db);
+            background-size: 200% 100%;
+            animation: gradientShift 5s ease infinite;
+        }
+        
+        @keyframes gradientShift {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+        
         .pricing-section h3 {
             color: #2c3e50;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            font-size: 28px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 15px;
         }
+        
+        .pricing-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: #3498db;
+        }
+        
         .pricing-table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 0 10px;
+            border-spacing: 0;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         }
+        
         .pricing-table th, .pricing-table td {
-            padding: 15px;
+            padding: 18px 20px;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
+        
+        .pricing-table tr {
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-table tr:hover {
+            background-color: rgba(52, 152, 219, 0.05);
+            transform: scale(1.01);
+        }
+        
         .pricing-table th {
-            background-color: #3498db;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 14px;
         }
+        
+        .pricing-table td {
+            border-bottom: 1px solid #eaeaea;
+            font-size: 16px;
+        }
+        
+        .pricing-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .pricing-table tr td:first-child {
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
         .special-offer {
-            background-color: #f1c40f;
-            color: black;
-            font-weight: bold;
-            padding: 10px;
+            background: linear-gradient(135deg, #f1c40f, #f39c12);
+            color: #fff;
+            font-weight: 600;
+            padding: 20px;
             text-align: center;
-            border-radius: 5px;
-            margin-top: 20px;
+            border-radius: 10px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+            animation: pulse 2s infinite;
         }
+        
+        @keyframes pulse {
+            0% {box-shadow: 0 0 0 0 rgba(243, 156, 18, 0.4);}
+            70% {box-shadow: 0 0 0 15px rgba(243, 156, 18, 0);}
+            100% {box-shadow: 0 0 0 0 rgba(243, 156, 18, 0);}
+        }
+        
+        .special-offer::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.1);
+            transform: rotate(45deg);
+            animation: shimmer 3s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            0% {transform: translate(-50%, -50%) rotate(0deg);}
+            100% {transform: translate(-50%, -50%) rotate(360deg);}
+        }
+        
         .promo-banner {
-            background-color: #27ae60;
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
             color: white;
-            padding: 15px;
+            padding: 25px;
             text-align: center;
-            border-radius: 8px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(46, 204, 113, 0.3);
+            transform: translateY(0);
+            transition: all 0.3s ease;
+        }
+        
+        .promo-banner:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(46, 204, 113, 0.4);
+        }
+        
+        .promo-banner h3 {
+            margin: 0;
+            font-size: 22px;
+            padding: 0;
+        }
+        
+        .promo-banner h3::after {
+            display: none;
+        }
+        
+        .promo-banner::before {
+            content: "AKCE";
+            position: absolute;
+            top: 10px;
+            right: -25px;
+            background: #e74c3c;
+            color: white;
+            padding: 5px 30px;
+            font-size: 12px;
+            transform: rotate(45deg);
+            font-weight: bold;
         }
 
-        /* Dark theme styly */
-        body.dark-theme .pricing-section {
-            background-color: #2a2a2a;
-            color: #e0e0e0;
-        }
-        body.dark-theme .pricing-table th {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-        body.dark-theme .pricing-table td {
-            border-bottom-color: #444;
-        }
-        body.dark-theme .special-offer {
-            background-color: #f39c12;
-            color: white;
-        }
-        body.dark-theme .promo-banner {
-            background-color: #2ecc71;
-        }
         .btn {
             display: block;
             width: 200px;
-            margin: 0 auto;
-            background-color: #0064a7;
+            margin: 40px auto;
+            background: linear-gradient(135deg, #3498db, #2980b9);
             color: white;
-            padding: 12px 25px;
+            padding: 15px 25px;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 50px;
             text-align: center;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            border: none;
+            font-weight: 600;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+            position: relative;
+            overflow: hidden;
         }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .btn:focus:not(:active)::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
         .theme-toggle {
             position: fixed;
             top: 20px;
             right: 20px;
             z-index: 1000;
-            background-color: #f1f1f1;
+            background-color: #ffffff;
             border: none;
-            padding: 10px;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
             cursor: pointer;
             transition: all 0.3s ease;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
         }
-
+        
         .theme-toggle:hover {
-            transform: rotate(90deg);
+            transform: rotate(180deg);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
-
+        
         .theme-dropdown {
             position: fixed;
-            top: 70px;
+            top: 80px;
             right: 20px;
             background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            padding: 10px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+            padding: 15px;
             display: none;
             z-index: 1000;
+            animation: fadeIn 0.3s ease;
         }
-
+        
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-10px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
         .theme-dropdown button {
             display: block;
             width: 100%;
-            padding: 10px;
-            margin: 5px 0;
+            padding: 12px 15px;
+            margin: 8px 0;
             border: none;
-            background-color: #f1f1f1;
-            border-radius: 5px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
             cursor: pointer;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        
+        .theme-dropdown button:hover {
+            background-color: #e6eaf0;
+            transform: translateX(5px);
         }
 
         /* Tmavý motiv */
@@ -125,55 +328,115 @@
             background-color: #121212;
             color: #e0e0e0;
         }
-
-        body.dark-theme header {
-            background-color: #1f1f1f;
+        
+        body.dark-theme .pricing-section {
+            background-color: #1e1e1e;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
-
-        body.dark-theme .car-card {
+        
+        body.dark-theme .pricing-section h3 {
+            color: #e0e0e0;
+        }
+        
+        body.dark-theme .pricing-table {
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-theme .pricing-table th {
+            background: linear-gradient(135deg, #2c3e50, #1f2c38);
+        }
+        
+        body.dark-theme .pricing-table td {
+            border-bottom-color: #333;
+        }
+        
+        body.dark-theme .pricing-table tr:hover {
+            background-color: rgba(52, 152, 219, 0.1);
+        }
+        
+        body.dark-theme .pricing-table tr td:first-child {
+            color: #3498db;
+        }
+        
+        body.dark-theme .special-offer {
+            background: linear-gradient(135deg, #d35400, #e67e22);
+        }
+        
+        body.dark-theme .promo-banner {
+            background: linear-gradient(135deg, #16a085, #27ae60);
+        }
+        
+        body.dark-theme .btn {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+        }
+        
+        body.dark-theme .theme-toggle {
+            background-color: #2a2a2a;
+            color: #e0e0e0;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+        }
+        
+        body.dark-theme .theme-dropdown {
+            background-color: #2a2a2a;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        body.dark-theme .theme-dropdown button {
             background-color: #1e1e1e;
             color: #e0e0e0;
         }
-
-        body.dark-theme .car-details .specs {
-            background-color: #2a2a2a;
+        
+        body.dark-theme .theme-dropdown button:hover {
+            background-color: #333;
         }
-
-        body.dark-theme .header-button {
-            background-color: #4a4a4a;
-        }
-
-        body.dark-theme .header-button:hover {
-            background-color: #5a5a5a;
-        }
-
-        body.dark-theme .btn {
-            background-color: #4a4a4a;
-        }
-
-        body.dark-theme .btn:hover {
-            background-color: #5a5a5a;
+        
+        /* Responzivní design */
+        @media (max-width: 768px) {
+            .pricing-section {
+                padding: 30px 15px;
+                margin: 30px 15px;
+            }
+            
+            .pricing-table th, .pricing-table td {
+                padding: 12px 10px;
+                font-size: 14px;
+            }
+            
+            .pricing-section h3 {
+                font-size: 22px;
+            }
+            
+            .promo-banner h3 {
+                font-size: 18px;
+            }
+            
+            .special-offer {
+                padding: 15px;
+                font-size: 14px;
+            }
+            
+            .btn {
+                width: 180px;
+                padding: 12px 20px;
+            }
         }
     </style>
 </head>
 <body>
 
- <!-- Tlačítko theme switcheru -->
- <button class="theme-toggle" onclick="toggleThemeDropdown()">🌓</button>
+    <!-- Tlačítko theme switcheru -->
+    <button class="theme-toggle" onclick="toggleThemeDropdown()">🌓</button>
     
- <!-- Dropdown pro výběr tématu -->
- <div class="theme-dropdown" id="themeDropdown">
-     <button onclick="setTheme('light')">Světlý motiv</button>
-     <button onclick="setTheme('dark')">Tmavý motiv</button>
-     <button onclick="setTheme('system')">Systémový motiv</button>
- </div>
+    <!-- Dropdown pro výběr tématu -->
+    <div class="theme-dropdown" id="themeDropdown">
+        <button onclick="setTheme('light')">Světlý motiv</button>
+        <button onclick="setTheme('dark')">Tmavý motiv</button>
+        <button onclick="setTheme('system')">Systémový motiv</button>
+    </div>
 
-    <!-- Předchozí obsah zůstává -->
-    
+    <!-- Vylepšený obsah ceníku -->
     <div class="pricing-section">
-        <div class="promo-banner">
-            <h3>Letní akce: První den pronájmu se slevou 20%!</h3>
-        </div>
+        
 
         <h3>Ceník pronájmu vozidel</h3>
         <table class="pricing-table">
@@ -213,18 +476,85 @@
             </tbody>
         </table>
 
-        <div class="special-offer">
-            Sleva 10% pro první zákazníky a při pronájmu na 7 a více dní!
-        </div>
+        
     </div>
 
     <button class="btn" onclick="window.location.href='index.html'">Zpět na vozidla</button>
 
     <script>
+        // Funkce pro přidání animace prvků při načtení stránky
+        document.addEventListener('DOMContentLoaded', () => {
+            // Animace při načtení stránky
+            const pricingSection = document.querySelector('.pricing-section');
+            pricingSection.style.opacity = '0';
+            pricingSection.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                pricingSection.style.transition = 'all 0.8s ease';
+                pricingSection.style.opacity = '1';
+                pricingSection.style.transform = 'translateY(0)';
+            }, 300);
+            
+            // Načtení uloženého tématu
+            const savedTheme = localStorage.getItem('theme');
+            const themeToggle = document.querySelector('.theme-toggle');
+            
+            if (savedTheme) {
+                setTheme(savedTheme);
+            } else {
+                // Výchozí nastavení podle systému
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    themeToggle.innerHTML = '🌑';
+                } else {
+                    themeToggle.innerHTML = '🌞';
+                }
+                setTheme('system');
+            }
+
+            // Poslech změn systémového tématu
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
+                if (localStorage.getItem('theme') === 'system') {
+                    setTheme('system');
+                }
+            });
+            
+            // Animace pro řádky tabulky
+            const tableRows = document.querySelectorAll('.pricing-table tbody tr');
+            tableRows.forEach((row, index) => {
+                row.style.opacity = '0';
+                row.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    row.style.transition = 'all 0.5s ease';
+                    row.style.opacity = '1';
+                    row.style.transform = 'translateX(0)';
+                }, 500 + (index * 150));
+            });
+        });
+
         // Funkce pro přepínání dropdownu
         function toggleThemeDropdown() {
             const dropdown = document.getElementById('themeDropdown');
-            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            if (dropdown.style.display === 'block') {
+                dropdown.style.opacity = '0';
+                dropdown.style.transform = 'translateY(-10px)';
+                setTimeout(() => {
+                    dropdown.style.display = 'none';
+                }, 300);
+            } else {
+                dropdown.style.display = 'block';
+                setTimeout(() => {
+                    dropdown.style.opacity = '1';
+                    dropdown.style.transform = 'translateY(0)';
+                }, 10);
+            }
+            
+            // Animace ikony
+            const themeToggle = document.querySelector('.theme-toggle');
+            themeToggle.style.transform = 'rotate(180deg)';
+            setTimeout(() => {
+                themeToggle.style.transform = 'rotate(0)';
+            }, 300);
         }
 
         // Funkce pro nastavení tématu
@@ -251,43 +581,53 @@
             }
             
             // Zavření dropdownu po výběru
-            document.getElementById('themeDropdown').style.display = 'none';
+            const dropdown = document.getElementById('themeDropdown');
+            dropdown.style.opacity = '0';
+            dropdown.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 300);
         }
-
-        // Inicializace tématu při načtení stránky
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('theme');
-            const themeToggle = document.querySelector('.theme-toggle');
-            
-            if (savedTheme) {
-                setTheme(savedTheme);
-            } else {
-                // Výchozí nastavení podle systému
-                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    themeToggle.innerHTML = '🌑';
-                } else {
-                    themeToggle.innerHTML = '🌞';
-                }
-                setTheme('system');
-            }
-
-            // Poslech změn systémového tématu
-            window.matchMedia('(prefers-color-scheme: dark)').addListener(() => {
-                if (localStorage.getItem('theme') === 'system') {
-                    setTheme('system');
-                }
-            });
-        });
 
         // Zavření dropdownu při kliknutí mimo něj
         window.onclick = function(event) {
             if (!event.target.matches('.theme-toggle')) {
                 const dropdown = document.getElementById('themeDropdown');
                 if (dropdown.style.display === 'block') {
-                    dropdown.style.display = 'none';
+                    dropdown.style.opacity = '0';
+                    dropdown.style.transform = 'translateY(-10px)';
+                    setTimeout(() => {
+                        dropdown.style.display = 'none';
+                    }, 300);
                 }
             }
-        }
+        };
+        
+        // Efekt vlnění pro tlačítka
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('click', function(e) {
+                const x = e.clientX - e.target.getBoundingClientRect().left;
+                const y = e.clientY - e.target.getBoundingClientRect().top;
+                
+                const ripple = document.createElement('span');
+                ripple.style.position = 'absolute';
+                ripple.style.backgroundColor = 'rgba(255, 255, 255, 0.7)';
+                ripple.style.borderRadius = '50%';
+                ripple.style.width = '1px';
+                ripple.style.height = '1px';
+                ripple.style.transform = 'scale(0)';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                ripple.style.animation = 'ripple 0.6s linear';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => {
+                    ripple.remove();
+                }, 600);
+            });
+        });
     </script>
 </body>
 </html>
